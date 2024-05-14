@@ -5,6 +5,16 @@ import React from "react";
 import { auth } from "./firebase";
 
 function Products() {
+  function onVisibilityChange() {
+    if (document.visibilityState === "visible") {
+      console.log("user is focused on the page");
+    } else {
+      signOut(auth);
+    }
+  }
+
+  document.addEventListener("visibilitychange", onVisibilityChange);
+
   React.useEffect(() => {
     return () => {
       signOut(auth);
