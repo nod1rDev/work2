@@ -1,12 +1,17 @@
-"use client"
+"use client";
 import { Link } from "@mui/material";
 import { signOut } from "firebase/auth";
 import React from "react";
 import { auth } from "./firebase";
 
 function Products() {
+  React.useEffect(() => {
+    return () => {
+      signOut(auth);
+    };
+  }, []);
   return (
-    <div className="font-bold text-[28px] ml-[50vh] mt-[25vh] ">
+    <div className="font-bold text-[28px] lg:ml-[50vh] mt-[25vh] ">
       Siz kirdingiz agar hohlasongiz chiqib keting
       <Link href="/">
         <span

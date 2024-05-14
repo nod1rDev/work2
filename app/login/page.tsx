@@ -17,6 +17,7 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebase";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { InputLabel, MenuItem, Select } from "@mui/material";
 
 function Copyright(props: any) {
   return (
@@ -41,16 +42,54 @@ const defaultTheme = createTheme();
 
 export default function Login() {
   const router = useRouter();
+  const [value, setValue] = React.useState<any>();
+
+  const handleChange = (e: any) => {
+    const name = e.target.value;
+    name == 1
+      ? setValue("Respublika")
+      : name == 2
+      ? setValue("Toshkent")
+      : name == 3
+      ? setValue("Samarqand")
+      : name == 4
+      ? setValue("Andijon")
+      : name == 5
+      ? setValue("Namangan")
+      : name == 6
+      ? setValue("Fargona")
+      : name == 7
+      ? setValue("Jizzax")
+      : name == 8
+      ? setValue("Navoi")
+      : name == 9
+      ? setValue("Xorazim")
+      : name == 10
+      ? setValue("Buxoro")
+      : name == 11
+      ? setValue("Qashqadaryo")
+      : name == 12
+      ? setValue("Qoraqalpogiston")
+      : name == 13
+      ? setValue("Sirdaryo")
+      : name == 14
+      ? setValue("Surxandaryo")
+      : null;
+  };
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data: any = new FormData(event.currentTarget);
     console.log({
-      email: data.get("name"),
       password: data.get("password"),
     });
-    const email = data.get("name") + "@gmail.com";
+    const email = value + "@gmail.com";
+    console.log(email);
 
-    signInWithEmailAndPassword(auth, email.toLowerCase(), data.get("password"))
+    signInWithEmailAndPassword(
+      auth,
+      email.toLowerCase(),
+      data.get("password").toLowerCase()
+    )
       .then((userCredential) => {
         // Signed in
         const user = userCredential.user;
@@ -88,16 +127,29 @@ export default function Login() {
             noValidate
             sx={{ mt: 1 }}
           >
-            <TextField
-              margin="normal"
-              required
+            <InputLabel id="demo-simple-select-label">Select name</InputLabel>
+            <Select
               fullWidth
-              id="name"
-              label="name"
-              name="name"
-              autoComplete="name"
-              autoFocus
-            />
+              value={1}
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              onChange={handleChange}
+            >
+              <MenuItem value={1}>Respublika</MenuItem>
+              <MenuItem value={2}>Toshkent</MenuItem>
+              <MenuItem value={3}>Samarqand</MenuItem>
+              <MenuItem value={4}>Andijon</MenuItem>
+              <MenuItem value={5}>Namangan</MenuItem>
+              <MenuItem value={6}>Fargona</MenuItem>
+              <MenuItem value={7}>Jizzax</MenuItem>
+              <MenuItem value={8}>Navoi</MenuItem>
+              <MenuItem value={9}>Xorazim</MenuItem>
+              <MenuItem value={10}>Buxoro</MenuItem>
+              <MenuItem value={11}>Qashqadaryo</MenuItem>
+              <MenuItem value={12}>Qoraqalpogiston</MenuItem>
+              <MenuItem value={13}>Sirdaryo</MenuItem>
+              <MenuItem value={14}>Surxandaryo</MenuItem>
+            </Select>
             <TextField
               margin="normal"
               required
@@ -108,7 +160,7 @@ export default function Login() {
               id="password"
               autoComplete="current-password"
             />
-         
+
             <Button
               type="submit"
               fullWidth
@@ -117,14 +169,8 @@ export default function Login() {
             >
               Sign In
             </Button>
-            <Grid container>
-              <Grid item>
-                <Link href="/signup">{"Don't have an account? Sign Up"}</Link>
-              </Grid>
-            </Grid>
           </Box>
         </Box>
-        
       </Container>
     </ThemeProvider>
   );
