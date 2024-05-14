@@ -130,7 +130,7 @@ export default function Login() {
             <InputLabel id="demo-simple-select-label">Select name</InputLabel>
             <Select
               fullWidth
-              value={1}
+              
               labelId="demo-simple-select-label"
               id="demo-simple-select"
               onChange={handleChange}
